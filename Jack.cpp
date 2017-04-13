@@ -32,7 +32,6 @@ Jack::Jack(int inpin, int outpin) {
 }
 
 Jack::Jack(int inpin, int outpin, boolean pullup) {
-  Serial.begin(9600);
 
   if (pullup == true) {
     pinMode(inpin, INPUT_PULLUP);
@@ -59,7 +58,7 @@ boolean Jack::listen() {
     if (in == HIGH) {
       return false;
     } else {
-      Serial.println("Got a low signal (I'm pull up)");
+      // Serial.println("Got a low signal (I'm pull up)");
       return true;
     }
   }
@@ -68,11 +67,11 @@ void Jack::setInterval(long interval) {
   _interval = interval;
 }
 void Jack::send() {
-  Serial.println("Sending a message in Jack::send()");
+  // Serial.println("Sending a message in Jack::send()");
   digitalWrite(_outpin, HIGH);
 
   delay(_interval);
   digitalWrite(_outpin, LOW);
-  Serial.println("Wait period is over ready to send again");
+  // Serial.println("Wait period is over ready to send again");
 }
 
