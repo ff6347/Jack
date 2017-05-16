@@ -23,16 +23,28 @@
 #include "Arduino.h"
 #include "Jack.h"
 
-Jack::Jack(int inpin, int outpin) {
-  Serial.begin(9600);
-  pinMode(inpin, INPUT);
-  pinMode(outpin, OUTPUT);
-  _inpin = inpin;
-  _outpin = outpin;
-}
+// Jack::Jack(int inpin, int outpin) {
+//   Serial.begin(9600);
+//   pinMode(inpin, INPUT);
+//   pinMode(outpin, OUTPUT);
+//   _inpin = inpin;
+//   _outpin = outpin;
+// }
 
-Jack::Jack(int inpin, int outpin, boolean pullup) {
+// Jack::Jack(int inpin, int outpin, boolean pullup) {
 
+//   if (pullup == true) {
+//     pinMode(inpin, INPUT_PULLUP);
+//   } else {
+//     pinMode(inpin, INPUT);
+//   }
+//   pinMode(outpin, OUTPUT);
+//   _inpin = inpin;
+//   _outpin = outpin;
+//   _pullup = pullup;
+// }
+
+Jack::Jack(int inpin, int outpin, boolean pullup, boolean log) {
   if (pullup == true) {
     pinMode(inpin, INPUT_PULLUP);
   } else {
@@ -42,6 +54,7 @@ Jack::Jack(int inpin, int outpin, boolean pullup) {
   _inpin = inpin;
   _outpin = outpin;
   _pullup = pullup;
+  _log = log;
 }
 
 Jack::~Jack() {}
@@ -50,6 +63,7 @@ boolean Jack::listen() {
   int in = digitalRead(_inpin);
   if (_pullup != true) {
     if (in == HIGH) {
+  if(_log) Serial.println("Jack got a signal");
       return true;
     } else {
       return false;
@@ -65,10 +79,18 @@ boolean Jack::listen() {
 }
 void Jack::setInterval(long interval) {
   _interval = interval;
+  if(_log) {
+    Serial.print("Jack changed interval to ");
+    Serial.println(_interval);
+  }
+
 }
 void Jack::send() {
   // Serial.println("Sending a message in Jack::send()");
   digitalWrite(_outpin, HIGH);
+  Serial.print("Jack is seding a signal and will wait for ");
+  Serial.print(_interval);
+  Serial.println(" milliseconds!");
 
   delay(_interval);
   digitalWrite(_outpin, LOW);

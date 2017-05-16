@@ -3,7 +3,15 @@
 
 // if you want to use an pullup input you can use this
 // extended constructor
-Jack jack(11 /*input pin*/ , 12 /* output pin*/, true);
+// Jack jack(11 /*input pin*/ , 12 /* output pin*/, true);
+
+// if you also want some additional logging
+// you can set the forth parameter to true
+// super extended constructor
+// you need to call
+// Serial.begin(9600)
+// in the setup of your sketch to make this work
+Jack jack(11 /*input pin*/ , 12 /* output pin*/, true, true);
 
 boolean action = false;
 

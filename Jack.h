@@ -32,8 +32,10 @@
 
 class Jack {
 public:
-  Jack(int inpin, int outpin);
-  Jack(int inpin, int outpin, boolean pullup);
+  Jack(int inpin, int outpin, boolean pullup, boolean log);
+  Jack(int inpin, int outpin) : Jack(inpin, outpin, false, false){};
+  Jack(int inpin, int outpin, boolean pullup) : Jack(inpin, outpin, pullup, false){};
+
   ~Jack();
   boolean listen();
   void send();
@@ -43,6 +45,7 @@ private:
   int _outpin;
   long _interval = 50;
   boolean _pullup = false;
+  boolean _log = false;
 };
 
 #endif
