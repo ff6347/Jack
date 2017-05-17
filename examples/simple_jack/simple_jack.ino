@@ -1,6 +1,8 @@
 #include <Jack.h>
+// this is the normal constructor
 // Jack jack(11 /*input pin */, 12 /* output pin*/);
-
+//
+// ----------------------------------------
 // if you want to use an pullup input you can use this
 // extended constructor
 // Jack jack(11 /*input pin*/ , 12 /* output pin*/, true);
