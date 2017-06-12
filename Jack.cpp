@@ -44,66 +44,50 @@
 //   _pullup = pullup;
 // }
 
-Jack::Jack(int inpin, int outpin, boolean pullup, boolean log) {
-  if (pullup == true) {
-    pinMode(inpin, INPUT_PULLUP);
+// Jack::Jack(int inpin, int outpin, boolean pullup, boolean log) {
+//   if (pullup == true) {
+//     pinMode(inpin, INPUT_PULLUP);
+//   } else {
+//     pinMode(inpin, INPUT);
+//   }
+//   pinMode(outpin, OUTPUT);
+//   _inpin = inpin;
+//   _outpin = outpin;
+//   _pullup = pullup;
+//   _log = log;
+// }
+
+Jack::Jack(int pin, boolean isinput) {
+  if(isinput == true){
+    pinMode(pin, INPUT_PULLUP);
   } else {
-    pinMode(inpin, INPUT);
+    pinMode(pin, OUTPUT)
   }
-  pinMode(outpin, OUTPUT);
-  _inpin = inpin;
-  _outpin = outpin;
-  _pullup = pullup;
-  _log = log;
+  _pin = pin;
+  _isinput = isinput;
 }
+
 
 Jack::~Jack() {}
 
 boolean Jack::listen() {
-
-  int in = digitalRead(_inpin);
-
-  if (_pullup == true) {
+  if(_isinput){
+    int in = digitalRead(_inpin);
     if (in == LOW) {
-  if(_log) Serial.println("Jack got a signal");
       return true;
     } else {
       return false;
-    }
-  } else {
-    if (in == HIGH) {
-      return false;
-    } else {
-      // Serial.println("Got a low signal (I'm pull up)");
-      return true;
     }
   }
 }
 void Jack::setInterval(long interval) {
   _interval = interval;
-  if(_log) {
-    Serial.print("Jack changed interval to ");
-    Serial.println(_interval);
-  }
-
 }
 void Jack::send() {
-  // Serial.println("Sending a message in Jack::send()");
-  if(_pullup == true){
-    digitalWrite(_outpin, LOW);
-  }else{
-    digitalWrite(_outpin, HIGH);
+  if(isinput != true){
+    digitalWrite(_pin, HIGH);
+    delay(_interval);
+    digitalWrite(_pin, LOW)
   }
-  Serial.print("Jack is seding a signal and will wait for ");
-  Serial.print(_interval);
-  Serial.println(" milliseconds!");
-  delay(_interval);
-  if(_pullup == true){
-    digitalWrite(_outpin, HIGH);
-  } else {
-    digitalWrite(_outpin, LOW);
-
-  }
-  // Serial.println("Wait period is over ready to send again");
 }
 
