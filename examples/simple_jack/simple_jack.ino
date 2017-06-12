@@ -1,10 +1,15 @@
 #include <Jack.h>
 // this is the normal constructor
-// Jack jack(11 /*input pin */, 12 /* output pin*/);
+Jack jack(11 /*input pin */, 12 /* output pin*/);
 //
 // ----------------------------------------
-// if you want to use an pullup input you can use this
+// if you know what your are doing
+// you can disable the internal pullups
+// beware that all Jack elments need to share the same option
+// they should be all pullup or not
+// if you don't use the pullup you need an external pulldown resistor
 // extended constructor
+// set pullup true true or false
 // Jack jack(11 /*input pin*/ , 12 /* output pin*/, true);
 //
 // ----------------------------------------
@@ -14,7 +19,7 @@
 // you need to call
 // Serial.begin(9600)
 // in the setup of your sketch to make this work
-Jack jack(11 /*input pin*/ , 12 /* output pin*/, true, true);
+// Jack jack(11 /*input pin*/ , 12 /* output pin*/, true, true);
 // holds if there is an action in progress
 boolean action = false;
 

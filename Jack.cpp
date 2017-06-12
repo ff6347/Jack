@@ -60,9 +60,11 @@ Jack::Jack(int inpin, int outpin, boolean pullup, boolean log) {
 Jack::~Jack() {}
 
 boolean Jack::listen() {
+
   int in = digitalRead(_inpin);
-  if (_pullup != true) {
-    if (in == HIGH) {
+
+  if (_pullup == true) {
+    if (in == LOW) {
   if(_log) Serial.println("Jack got a signal");
       return true;
     } else {
@@ -87,13 +89,21 @@ void Jack::setInterval(long interval) {
 }
 void Jack::send() {
   // Serial.println("Sending a message in Jack::send()");
-  digitalWrite(_outpin, HIGH);
+  if(_pullup == true){
+    digitalWrite(_outpin, LOW);
+  }else{
+    digitalWrite(_outpin, HIGH);
+  }
   Serial.print("Jack is seding a signal and will wait for ");
   Serial.print(_interval);
   Serial.println(" milliseconds!");
-
   delay(_interval);
-  digitalWrite(_outpin, LOW);
+  if(_pullup == true){
+    digitalWrite(_outpin, HIGH);
+  } else {
+    digitalWrite(_outpin, LOW);
+
+  }
   // Serial.println("Wait period is over ready to send again");
 }
 

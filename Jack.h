@@ -22,7 +22,8 @@
  *
  * Jack in a Box Library
  * @author Fabian Morón Zirfas
- * @description A library for the "Jack in a Box" project. Using headphone jacks to communicate between Arduino boards
+ * @description A library for the "Jack in a Box" project.
+ * Using headphone jacks to communicate between Arduino boards
  */
 
 #ifndef Jack_h
@@ -44,7 +45,7 @@ private:
   int _inpin;
   int _outpin;
   long _interval = 50;
-  boolean _pullup = false;
+  boolean _pullup = true;
   boolean _log = false;
 };
 
